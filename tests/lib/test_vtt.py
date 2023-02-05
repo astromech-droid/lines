@@ -53,5 +53,16 @@ def test_join_multilines():
                 "end": "00:11:18.500",
                 "text": " I mean, unless you're talking, what, Plus P Plus loads, you can forget the 9 mil, all right?",
             },
+            {"start": "00:21:27.709", "end": "00:21:29.917", "text": " [♪♪♪]"},
+            {
+                "start": "00:22:13.291",
+                "end": "00:22:16.125",
+                "text": " [BUTTONS BEEPING]",
+            },
+            {
+                "start": "00:22:16.125",
+                "end": "00:22:17.917",
+                "text": " [PHONE RINGING]",
+            },
         ]
         assert joined_data == expected_value
