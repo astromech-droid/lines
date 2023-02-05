@@ -28,7 +28,18 @@ async def post_url(url: Url, response: Response):
         return "Succeed"
 
 
+@app.get("/api/urls/")
+async def get_urls():
+    return db.get_urls()
+
+
 @app.get("/urls/register/", response_class=HTMLResponse)
 async def register_url():
     with open("./www/html/register_url.html", "r") as f:
+        return f.read()
+
+
+@app.get("/urls/", response_class=HTMLResponse)
+async def list_urls():
+    with open("./www/html/list_urls.html", "r") as f:
         return f.read()

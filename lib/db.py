@@ -1,3 +1,4 @@
+import hashlib
 from conf import settings
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
@@ -19,9 +20,17 @@ def bulk_data(docs):
 
 
 def register_url(url: str):
-    es.index(index="urls", body={"url": url})
+    # 生のurlだと長すぎてterm検索できないので、hash値も保管しておく
+    hash = hashlib.md5(url.encode()).hexdigest()
+    es.index(index="urls", body={"url": url, "hash": hash})
 
 
 def count_url(url: str) -> int:
-    result = es.count(index="urls", body={"query": {"match": {"url": url}}})
+    # 生のurlだと長すぎてterm検索できないので、hash値を検索する
+    hash = hashlib.md5(url.encode()).hexdigest()
+    result = es.count(index="urls", body={"query": {"term": {"hash": hash}}})
     return result["count"]
+
+
+def get_urls() -> dict:
+    return es.search(index="urls", body={"query": {"match_all": {}}})
