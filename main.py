@@ -43,3 +43,9 @@ async def register_url():
 async def list_urls():
     with open("./www/html/list_urls.html", "r") as f:
         return f.read()
+
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    with open("./www/html/index.html", "r") as f:
+        return f.read()
