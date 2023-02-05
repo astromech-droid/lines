@@ -25,5 +25,7 @@ def test_extract_payload():
     with open("tests/sample/extract_payload.vtt", "r") as f:
         text = f.read()
         payload = vtt.extract_payload(text)
-        excepted_value = [("00:00:13.333", "00:00:16.542", "[♪♪♪]")]
+        excepted_value = [
+            {"start": "00:00:13.333", "end": "00:00:16.542", "text": "[♪♪♪]"}
+        ]
         assert payload == excepted_value

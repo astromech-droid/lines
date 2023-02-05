@@ -34,11 +34,11 @@ def download(url: str, path: str) -> bool:
 
 
 # 時刻とセリフだけをテキストから抽出する
-def extract_payload(text: str) -> list:  # (start, end, text) のlist
+def extract_payload(text: str) -> list:
     payload = []
     buffer = StringIO(text)
 
     for cap in webvtt.read_buffer(buffer):
-        payload.append((cap.start, cap.end, cap.text))
+        payload.append({"start": cap.start, "end": cap.end, "text": cap.text})
 
     return payload
