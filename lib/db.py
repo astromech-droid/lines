@@ -16,3 +16,12 @@ def gen_bulk_data(docs):
 
 def bulk_data(docs):
     bulk(es, gen_bulk_data(docs))
+
+
+def register_url(url: str):
+    es.index(index="urls", body={"url": url})
+
+
+def count_url(url: str) -> int:
+    result = es.count(index="urls", body={"query": {"match": {"url": url}}})
+    return result["count"]
