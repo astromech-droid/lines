@@ -12,7 +12,7 @@ class Url(BaseModel):
 app = FastAPI()
 
 
-@app.post("/urls/", status_code=status.HTTP_200_OK)
+@app.post("/api/urls/", status_code=status.HTTP_200_OK)
 async def post_url(url: Url, response: Response):
     if db.count_url(url.url) > 0:
         response.status_code = status.HTTP_409_CONFLICT
@@ -28,7 +28,7 @@ async def post_url(url: Url, response: Response):
         return "Succeed"
 
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
+@app.get("/urls/register/", response_class=HTMLResponse)
+async def register_url():
     with open("./www/html/index.html", "r") as f:
         return f.read()
