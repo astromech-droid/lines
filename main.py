@@ -30,5 +30,5 @@ async def post_url(url: Url, response: Response):
 
 @app.get("/urls/register/", response_class=HTMLResponse)
 async def register_url():
-    with open("./www/html/index.html", "r") as f:
+    with open("./www/html/register_url.html", "r") as f:
         return f.read()
