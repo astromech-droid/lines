@@ -1,5 +1,7 @@
 import re
+import webvtt
 import requests
+from io import StringIO
 
 
 # インターネットから字幕テキスト(str)を取得する
@@ -29,3 +31,14 @@ def save(text: str, path: str) -> bool:
 def download(url: str, path: str) -> bool:
     text = fetch(url)
     return save(text, path)
+
+
+# 時刻とセリフだけをテキストから抽出する
+def extract_payload(text: str) -> list:  # (start, end, text) のlist
+    payload = []
+    buffer = StringIO(text)
+
+    for cap in webvtt.read_buffer(buffer):
+        payload.append((cap.start, cap.end, cap.text))
+
+    return payload

@@ -19,3 +19,11 @@ def test_save(tmp_path):
 def test_download(tmp_path):
     path = tmp_path / "test_download.txt"
     assert vtt.download(url, path) is True
+
+
+def test_extract_payload():
+    with open("tests/sample/extract_payload.vtt", "r") as f:
+        text = f.read()
+        payload = vtt.extract_payload(text)
+        excepted_value = [("00:00:13.333", "00:00:16.542", "[♪♪♪]")]
+        assert payload == excepted_value
