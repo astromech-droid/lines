@@ -1,0 +1,9 @@
+{
+    "es": {
+        "host": "http://localhost:9200",
+        "auth": {
+            "username": "elastic",
+            "password": "aeVIUEp4_aPlkRxxUfA9"
+        }
+    }
+}

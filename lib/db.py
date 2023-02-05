@@ -1,11 +1,10 @@
+from conf import settings
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
-username = "elastic"
-password = "aeVIUEp4_aPlkRxxUfA9"
 es = Elasticsearch(
-    "http://localhost:9200",
-    basic_auth=(username, password),
+    hosts=[settings.ES_HOST],
+    basic_auth=(settings.ES_USERNAME, settings.ES_PASSWORD),
 )
 
 
