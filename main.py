@@ -1,5 +1,21 @@
+from lib import db
 from lib import vtt
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-url = "https://ipv4-c003-itm001-k-opticom-isp.1.oca.nflxvideo.net/?o=1&v=121&e=1675609223&t=fr-uZkiRvIUukvSmUZ7cohOOE154ZzZvoglYsKlh5bcx5GNRrPRLiK2KVGPEaZR7Zo_VGlh--TxZ9x_AgHTwTTfuXo7rt5_zc8Ju84QrJdbfAmUDADtMA4l46jBcwWltfIrgF7Mhj_d4E0XerDCfXeDK-LDuQaAsRJSOEKtHhdejm9GICuzDBwy2m2F2qJDvKFkGbGDxG5ddZydAEeBUuIGwk4Y47pYeA-hRkfZZ-zFnHw"
-path = "data/breaking_bad_s1_e1.vtt"
-vtt.download(url, path)
+
+class Url(BaseModel):
+    url: str
+
+
+app = FastAPI()
+
+
+@app.post("/url/")
+async def pass_url(url: Url):
+    text = vtt.fetch(url.url)
+    payload = vtt.extract_payload(text)
+    joined_data = vtt.join_multilines(payload)
+    db.bulk_data(joined_data)
+
+    return url
