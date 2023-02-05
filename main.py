@@ -49,3 +49,9 @@ async def list_urls():
 async def root():
     with open("./www/html/index.html", "r") as f:
         return f.read()
+
+
+@app.get("/lines/search", response_class=HTMLResponse)
+async def search_lines():
+    with open("./www/html/search_lines.html", "r") as f:
+        return f.read()

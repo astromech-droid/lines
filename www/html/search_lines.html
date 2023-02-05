@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lines</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model="text" placeholder="edit me">
+        <ul>
+            <li v-for="r in result" :id="r._id">
+                {{ r._source.text }}
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: '',
+            text: ''
+        },
+        watch: {
+            text: function () {
+                axios.post(
+                    'http://localhost:9200/lines/_search',
+                    {
+                        "query": { "match": { "text": this.text } }
+                    },
+                    {
+                        auth: {
+                            username: 'elastic',
+                            password: 'aeVIUEp4_aPlkRxxUfA9'
+                        }
+                    })
+                    .then(res => {
+                        this.result = res.data.hits.hits
+                    })
+                    .catch(err => {
+                        this.result = err
+                    })
+            }
+        }
+    })
+</script>
+
+</html>
