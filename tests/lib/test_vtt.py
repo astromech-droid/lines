@@ -29,3 +29,29 @@ def test_extract_payload():
             {"start": "00:00:13.333", "end": "00:00:16.542", "text": "[♪♪♪]"}
         ]
         assert payload == excepted_value
+
+
+def test_join_multilines():
+    with open("tests/sample/join_multilines.vtt", "r") as f:
+        text = f.read()
+        payload = vtt.extract_payload(text)
+        joined_data = vtt.join_multilines(payload)
+        expected_value = [
+            {
+                "start": "00:02:12.750",
+                "end": "00:02:15.291",
+                "text": " My name is Walter Hartwell White.",
+            },
+            {"start": "00:10:40.750", "end": "00:10:43.208", "text": " ALL: Surprise!"},
+            {
+                "start": "00:10:59.291",
+                "end": "00:11:01.500",
+                "text": " She's not showing at all, is she?",
+            },
+            {
+                "start": "00:11:13.667",
+                "end": "00:11:18.500",
+                "text": " I mean, unless you're talking, what, Plus P Plus loads, you can forget the 9 mil, all right?",
+            },
+        ]
+        assert joined_data == expected_value
