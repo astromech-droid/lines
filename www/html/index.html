@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lines</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model="url" placeholder="edit me">
+        <button @click="postUrl">submit</button><br>
+        {{ result }}
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            url: '',
+            result: ''
+        },
+        methods: {
+            postUrl: function () {
+                axios.post(
+                    'http://localhost:8000/url/',
+                    { url: this.url },
+                    {
+                        auth: {
+                            username: 'elastic',
+                            password: 'aeVIUEp4_aPlkRxxUfA9'
+                        }
+                    })
+                    .then(res => {
+                        this.result = 'OK'
+                    })
+                    .catch(err => {
+                        this.result = err
+                    })
+            }
+        }
+    })
+</script>
+
+</html>
