@@ -64,5 +64,15 @@ def test_join_multilines():
                 "end": "00:22:17.917",
                 "text": " [PHONE RINGING]",
             },
+            {
+                "start": "00:55:12.166",
+                "end": "00:55:15.875",
+                "text": " ♪ I'm walking out for love ♪",
+            },
+            {
+                "start": "00:55:15.875",
+                "end": "00:55:19.333",
+                "text": " ♪ I'm walking out really down In a cool breeze ♪",
+            },
         ]
         assert joined_data == expected_value

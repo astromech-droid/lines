@@ -53,7 +53,7 @@ def join_multilines(payload: str) -> list:
         queue.append(cap)
 
         # 行末の文字を見てセリフが終わっているか判別
-        if re.match(r".*(\.|\!|\?|\])$", queue[-1]["text"]):
+        if re.match(r".*(\.|\!|\?|\]|♪)$", queue[-1]["text"]):
             # セリフが終わった場合 -> queueの中身をjoinして保存
             text_buffer = ""
             for q in queue:
