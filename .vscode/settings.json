@@ -1,0 +1,14 @@
+{
+    "python.linting.flake8Args": [
+        "--max-line-length=107",
+        "--per-file-ignores=test_vtt.py:E501"
+    ],
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
