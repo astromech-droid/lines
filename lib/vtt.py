@@ -4,16 +4,15 @@ import requests
 from io import StringIO
 
 
-# インターネットから字幕テキスト(str)を取得する
-def fetch(url: str) -> str:
-    res = requests.get(url)
-
-    if re.match(r"^WEBVTT", res.text):
-        return res.text
-
-    else:
-        # WebVTT以外のデータは返さない
-        return None
+# 字幕テキストファイルから(.vtt)を字幕テキスト(str)を取得する
+def fetch(path: str) -> str:
+    with open(path, "r") as f:
+        text = f.read()
+        if re.match(r"^WEBVTT", text):
+            return text
+        else:
+            # WebVTT以外のデータは返さない
+            return None
 
 
 # テキスト(str)をファイルに保存する
@@ -29,7 +28,8 @@ def save(text: str, path: str) -> bool:
 
 # インターネットから字幕テキストをダウンロードする
 def download(url: str, path: str) -> bool:
-    text = fetch(url)
+    res = requests.get(url)
+    text = res.text
     return save(text, path)
 
 

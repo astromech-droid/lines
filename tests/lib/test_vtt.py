@@ -5,8 +5,8 @@ url = "https://ipv4-c003-itm001-k-opticom-isp.1.oca.nflxvideo.net/?o=1&v=121&e=1
 
 
 def test_fetch():
-    assert type(vtt.fetch(url)) == str
-    assert vtt.fetch("https://google.com") is None
+    path = "tests/sample/fetch.vtt"
+    assert type(vtt.fetch(path)) == str
 
 
 def test_save(tmp_path):
