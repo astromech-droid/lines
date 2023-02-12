@@ -1,5 +1,3 @@
-import hashlib
-import json
 from conf import settings
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
