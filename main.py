@@ -52,7 +52,7 @@ async def list_episodes():
         return f.read()
 
 
-@app.get("/episodes/{id}")
+@app.get("/episodes/vtt/{id}")
 async def get_episode(id: str):
     path = f"./data/{id}.vtt"
     return FileResponse(path)
