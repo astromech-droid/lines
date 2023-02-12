@@ -1,4 +1,5 @@
 import hashlib
+import json
 from conf import settings
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
@@ -19,10 +20,11 @@ def bulk_data(docs):
     bulk(es, gen_bulk_data(docs))
 
 
-def register_episode(url: str):
+def register_episode(ep: dict):
     # 生のurlだと長すぎてterm検索できないので、hash値も保管しておく
-    hash = hashlib.md5(url.encode()).hexdigest()
-    es.index(index="episodes", body={"url": url, "hash": hash})
+    # hash = hashlib.md5(url.encode()).hexdigest()
+    # es.index(index="episodes", body={"url": url, "hash": hash})
+    es.index(index="episodes", body=ep)
 
 
 def count_episodes(url: str) -> int:

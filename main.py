@@ -6,6 +6,10 @@ from pydantic import BaseModel
 
 
 class Episode(BaseModel):
+    title: str
+    service: str
+    episode_num: int
+    season_num: int
     url: str
 
 
@@ -23,7 +27,7 @@ async def post_episode(ep: Episode, response: Response):
         payload = vtt.extract_payload(text)
         joined_data = vtt.join_multilines(payload)
         db.bulk_data(joined_data)
-        db.register_episode(ep.url)
+        db.register_episode(ep.dict())
 
         return "Succeed"
 

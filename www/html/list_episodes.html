@@ -12,11 +12,35 @@
 
 <body>
     <div id="app">
+        <table>
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Title</th>
+                    <th>Season</th>
+                    <th>Episode</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="r in result" :id="r._id">
+                    <td>{{ r._source.service }}</td>
+                    <td>{{ r._source.title }}</td>
+                    <td>{{ r._source.season_num }}</td>
+                    <td>{{ r._source.episode_num }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--
         <ul>
             <li v-for="r in result" :id="r._id">
                 {{ r._source.url }}
+                {{ r._source.title }}
+                {{ r._source.season_num }}
+                {{ r._source.episode_num }}
+                {{ r._source.service }}
             </li>
         </ul>
+        -->
     </div>
 </body>
 

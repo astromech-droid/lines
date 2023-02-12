@@ -12,7 +12,21 @@
 
 <body>
     <div id="app">
-        <input v-model="url" placeholder="edit me">
+        <div>
+            service: <input v-model="service" placeholder="edit me">
+        </div>
+        <div>
+            title: <input v-model="title" placeholder="edit me">
+        </div>
+        <div>
+            season_num: <input v-model="season_num" placeholder="edit me">
+        </div>
+        <div>
+            episode_num: <input v-model="episode_num" placeholder="edit me">
+        </div>
+        <div>
+            url: <input v-model="url" placeholder="edit me">
+        </div>
         <button @click="postUrl">submit</button><br>
         {{ result }}
     </div>
@@ -22,6 +36,10 @@
     var app = new Vue({
         el: '#app',
         data: {
+            service: '',
+            title: '',
+            season_num: '',
+            episode_num: '',
             url: '',
             result: ''
         },
@@ -29,7 +47,13 @@
             postUrl: function () {
                 axios.post(
                     'http://localhost:8000/api/episodes/',
-                    { url: this.url },
+                    {
+                        service: this.service,
+                        title: this.title,
+                        season_num: this.season_num,
+                        episode_num: this.episode_num,
+                        url: this.url,
+                    },
                     {
                         auth: {
                             username: 'elastic',
