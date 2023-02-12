@@ -23,6 +23,8 @@ async def post_episode(ep: Episode, response: Response):
         response.status_code = status.HTTP_409_CONFLICT
         return "This url is already exists."
     """
+    filename = f"{ep.title}_{ep.season_num}_{ep.episode_num}.vtt"
+    vtt.download(ep.url, path=f"./data/{filename}")
     text = vtt.fetch(ep.url)
     payload = vtt.extract_payload(text)
     joined_data = vtt.join_multilines(payload)
