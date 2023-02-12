@@ -18,18 +18,18 @@ app = FastAPI()
 
 @app.post("/api/episodes/", status_code=status.HTTP_200_OK)
 async def post_episode(ep: Episode, response: Response):
+    """
     if db.count_episodes(ep.url) > 0:
         response.status_code = status.HTTP_409_CONFLICT
         return "This url is already exists."
+    """
+    text = vtt.fetch(ep.url)
+    payload = vtt.extract_payload(text)
+    joined_data = vtt.join_multilines(payload)
+    db.bulk_data(joined_data)
+    db.register_episode(ep.dict())
 
-    else:
-        text = vtt.fetch(ep.url)
-        payload = vtt.extract_payload(text)
-        joined_data = vtt.join_multilines(payload)
-        db.bulk_data(joined_data)
-        db.register_episode(ep.dict())
-
-        return "Succeed"
+    return "Succeed"
 
 
 @app.get("/api/episodes/")
