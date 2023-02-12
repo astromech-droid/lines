@@ -31,7 +31,7 @@ async def post_episode(ep: Episode, response: Response):
     text = vtt.fetch(path)
     payload = vtt.extract_payload(text)
     joined_data = vtt.join_multilines(payload)
-    db.bulk_data(joined_data)
+    db.bulk_lines(ep.id, joined_data)
     return db.register_episode(ep.dict())
 
 

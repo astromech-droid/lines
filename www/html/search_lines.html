@@ -13,11 +13,24 @@
 <body>
     <div id="app">
         <input v-model="text" placeholder="edit me">
-        <ul>
-            <li v-for="r in result" :id="r._id">
-                {{ r._source.text }}
-            </li>
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Text</th>
+                    <th>Episode</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="r in result" :id="r._id">
+                    <td>{{ r._source.text }}</td>
+                    <td>{{ r._source.ep_id }}</td>
+                    <td>{{ r._source.start }}</td>
+                    <td>{{ r._source.end }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 

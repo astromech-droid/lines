@@ -8,14 +8,14 @@ es = Elasticsearch(
 )
 
 
-def gen_bulk_data(docs):
+def gen_bulk_data(ep_id, docs):
     for doc in docs:
-        doc = doc | {"_index": "lines"}
+        doc = doc | {"_index": "lines", "ep_id": ep_id}
         yield doc
 
 
-def bulk_data(docs):
-    bulk(es, gen_bulk_data(docs))
+def bulk_lines(ep_id: str, docs: list):
+    bulk(es, gen_bulk_data(ep_id, docs))
 
 
 def register_episode(ep: dict):
