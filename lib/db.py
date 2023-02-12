@@ -19,7 +19,8 @@ def bulk_data(docs):
 
 
 def register_episode(ep: dict):
-    es.index(index="episodes", body=ep)
+    id = ep.pop("id")
+    return es.index(index="episodes", id=id, body=ep)
 
 
 def get_episodes() -> dict:

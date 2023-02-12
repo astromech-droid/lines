@@ -1,11 +1,13 @@
+import uuid
 from lib import db
 from lib import vtt
 from fastapi import FastAPI, Response, status
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from pydantic import BaseModel
 
 
 class Episode(BaseModel):
+    id: str = None
     title: str
     service: str
     episode_num: int
@@ -18,21 +20,19 @@ app = FastAPI()
 
 @app.post("/api/episodes/", status_code=status.HTTP_200_OK)
 async def post_episode(ep: Episode, response: Response):
+    ep.id = uuid.uuid4()
     """
     if db.count_episodes(ep.url) > 0:
         response.status_code = status.HTTP_409_CONFLICT
         return "This url is already exists."
     """
-    filename = f"{ep.title}_{ep.season_num}_{ep.episode_num}.vtt"
-    path = f"./data/{filename}"
+    path = f"./data/{ep.id}.vtt"
     vtt.download(ep.url, path)
     text = vtt.fetch(path)
     payload = vtt.extract_payload(text)
     joined_data = vtt.join_multilines(payload)
     db.bulk_data(joined_data)
-    db.register_episode(ep.dict())
-
-    return "Succeed"
+    return db.register_episode(ep.dict())
 
 
 @app.get("/api/episodes/")
@@ -50,6 +50,12 @@ async def register_episode():
 async def list_episodes():
     with open("./www/html/list_episodes.html", "r") as f:
         return f.read()
+
+
+@app.get("/episodes/{id}")
+async def get_episode(id: str):
+    path = f"./data/{id}.vtt"
+    return FileResponse(path)
 
 
 @app.get("/", response_class=HTMLResponse)
