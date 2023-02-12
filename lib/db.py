@@ -19,18 +19,18 @@ def bulk_data(docs):
     bulk(es, gen_bulk_data(docs))
 
 
-def register_url(url: str):
+def register_episode(url: str):
     # 生のurlだと長すぎてterm検索できないので、hash値も保管しておく
     hash = hashlib.md5(url.encode()).hexdigest()
-    es.index(index="urls", body={"url": url, "hash": hash})
+    es.index(index="episodes", body={"url": url, "hash": hash})
 
 
-def count_url(url: str) -> int:
+def count_episodes(url: str) -> int:
     # 生のurlだと長すぎてterm検索できないので、hash値を検索する
     hash = hashlib.md5(url.encode()).hexdigest()
-    result = es.count(index="urls", body={"query": {"term": {"hash": hash}}})
+    result = es.count(index="episodes", body={"query": {"term": {"hash": hash}}})
     return result["count"]
 
 
-def get_urls() -> dict:
-    return es.search(index="urls", body={"query": {"match_all": {}}})
+def get_episodes() -> dict:
+    return es.search(index="episodes", body={"query": {"match_all": {}}})
