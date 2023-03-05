@@ -39,7 +39,9 @@ def extract_payload(text: str) -> list:
     buffer = StringIO(text)
 
     for cap in webvtt.read_buffer(buffer):
-        payload.append({"start": cap.start, "end": cap.end, "text": cap.text})
+        # テキスト中に\nが含まれていた場合は分割する
+        for text in cap.text.split("\n"):
+            payload.append({"start": cap.start, "end": cap.end, "text": text})
 
     return payload
 
