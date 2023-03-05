@@ -25,7 +25,9 @@
             <tbody>
                 <tr v-for="r in result" :id="r._id">
                     <td>{{ r._source.text }}</td>
-                    <td>{{ r._source.ep_id }}</td>
+                    <td>
+                        <a :href="`http://localhost:8000/episodes/vtt/${r._source.ep_id}`">{{ r._source.ep_id }}</a>
+                    </td>
                     <td>{{ r._source.start }}</td>
                     <td>{{ r._source.end }}</td>
                 </tr>
